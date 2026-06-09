@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Admin from "./pages/Admin";
 import Home from "./pages/Home";
-import LoadingScreen from "./components/LoadingScreen";
+import LoadingScreen from "./components/Loadingscreen";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(
