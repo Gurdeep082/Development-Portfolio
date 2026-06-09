@@ -60,7 +60,7 @@ const Admin = () => {
     setIsBusy(true);
     setStatus({ type: "", text: "" });
     try {
-      const response = await axios.get("/api/admin/dashboard", adminConfig);
+      const response = await axios.get("https://portfolio-quwt.onrender.com/api/admin/dashboard", adminConfig);
       window.localStorage.setItem("portfolioAdminKey", adminKey);
       cacheProjects(response.data.projects);
       setDashboard(response.data);
@@ -98,7 +98,7 @@ const Admin = () => {
     setIsBusy(true);
     setStatus({ type: "", text: "" });
     try {
-      const response = await axios.post("/api/admin/projects", project, adminConfig);
+      const response = await axios.post("https://portfolio-quwt.onrender.com/api/admin/projects", project, adminConfig);
       setDashboard((current) => {
         const projects = [response.data, ...current.projects];
         cacheProjects(projects);
@@ -123,7 +123,7 @@ const Admin = () => {
     try {
       const resume = await readFile(resumeFile, 6);
       await axios.put(
-        "/api/admin/resume",
+        "https://portfolio-quwt.onrender.com/api/admin/resume",
         { resume, resumeName: resumeFile.name },
         adminConfig
       );
@@ -149,7 +149,7 @@ const Admin = () => {
     setIsBusy(true);
     setStatus({ type: "", text: "" });
     try {
-      await axios.delete(`/api/admin/${type}/${id}`, adminConfig);
+      await axios.delete(`https://portfolio-quwt.onrender.com/api/admin/${type}/${id}`, adminConfig);
       setDashboard((current) => {
         const items = current[type].filter((item) => item._id !== id);
         if (type === "projects") cacheProjects(items);
@@ -167,7 +167,7 @@ const Admin = () => {
     if (!isDashboardOpen || !adminKey) return undefined;
 
     const eventSource = new EventSource(
-      `/api/admin/events?key=${encodeURIComponent(adminKey)}`
+      `https://portfolio-quwt.onrender.com/api/admin/events?key=${encodeURIComponent(adminKey)}`
     );
 
     const addUniqueItem = (items, item) => {

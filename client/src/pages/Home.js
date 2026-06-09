@@ -99,8 +99,8 @@ const Home = () => {
     const loadPortfolioData = async () => {
       try {
         const [projectsResponse, settingsResponse] = await Promise.all([
-          axios.get("/api/projects"),
-          axios.get("/api/settings"),
+          axios.get("https://portfolio-quwt.onrender.com/api/projects"),
+          axios.get("https://portfolio-quwt.onrender.com/api/settings"),
         ]);
 
         if (projectsResponse.data.length) {
@@ -130,7 +130,7 @@ const Home = () => {
     if (window.sessionStorage.getItem(visitKey)) return;
 
     window.sessionStorage.setItem(visitKey, "true");
-    axios.post("/api/visits").catch(() => {
+    axios.post("https://portfolio-quwt.onrender.com/api/visits").catch(() => {
       window.sessionStorage.removeItem(visitKey);
     });
   }, []);
@@ -146,7 +146,7 @@ const Home = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("/api/contact", formData);
+      const response = await axios.post("https://portfolio-quwt.onrender.com/api/contact", formData);
       setStatus({ type: "success", text: response.data.message });
       setFormData({ fullName: "", email: "", company: "", message: "" });
     } catch (error) {
