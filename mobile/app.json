@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Gurdeep Portfolio",
+    "slug": "gurdeep-portfolio",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gurdeepsingh.portfolio"
+    },
+    "android": {
+      "package": "com.gurdeepsingh.portfolio",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-sharing"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fa88c82a-2eff-4e4a-acd6-55400d809fbf"
+      }
+    }
+  }
+}
