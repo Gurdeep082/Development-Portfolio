@@ -185,10 +185,21 @@ const Admin = () => {
 
     const onMessageCreated = (event) => {
       const message = JSON.parse(event.data);
+
       setDashboard((current) => ({
         ...current,
         messages: addUniqueItem(current.messages, message),
       }));
+
+      if (
+        "Notification" in window &&
+        Notification.permission === "granted"
+      ) {
+        new Notification("New Portfolio Message", {
+          body: `${message.fullName} sent a message`,
+          icon: "/icon-192.png",
+        });
+      }
     };
 
     const onMessageDeleted = (event) => {
