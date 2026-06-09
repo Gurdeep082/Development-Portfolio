@@ -49,7 +49,7 @@ export default function AdminScreen({ apiUrl, onApiUrlChange }) {
       if (!adminKey) return;
       if (!silent) setBusy(true);
       try {
-        const data = await apiRequest(apiUrl, "/api/admin/dashboard", { headers });
+        const data = await apiRequest(apiUrl, "https://portfolio-quwt.onrender.com/api/admin/dashboard", { headers });
         setDashboard(data);
         await SecureStore.setItemAsync("portfolioAdminKey", adminKey);
         if (!silent) setStatus("Dashboard connected.");
@@ -139,7 +139,7 @@ export default function AdminScreen({ apiUrl, onApiUrlChange }) {
 
     setBusy(true);
     try {
-      const created = await apiRequest(apiUrl, "/api/admin/projects", {
+      const created = await apiRequest(apiUrl, "https://portfolio-quwt.onrender.com/api/admin/projects", {
         method: "POST",
         headers,
         body: JSON.stringify(project),
@@ -164,7 +164,7 @@ export default function AdminScreen({ apiUrl, onApiUrlChange }) {
       const base64 = await FileSystem.readAsStringAsync(resume.uri, {
         encoding: FileSystem.EncodingType.Base64,
       });
-      await apiRequest(apiUrl, "/api/admin/resume", {
+      await apiRequest(apiUrl, "https://portfolio-quwt.onrender.com/api/admin/resume", {
         method: "PUT",
         headers,
         body: JSON.stringify({
@@ -193,7 +193,7 @@ export default function AdminScreen({ apiUrl, onApiUrlChange }) {
         style: "destructive",
         onPress: async () => {
           try {
-            await apiRequest(apiUrl, `/api/admin/${type}/${id}`, {
+            await apiRequest(apiUrl, `https://portfolio-quwt.onrender.com/api/admin/${type}/${id}`, {
               method: "DELETE",
               headers,
             });

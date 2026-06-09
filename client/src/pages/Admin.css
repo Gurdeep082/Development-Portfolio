@@ -280,8 +280,29 @@ body,
   border: 1px solid var(--admin-line);
   border-radius: 12px;
   background: #0c1119;
+
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.message-card h3,
+.message-card p,
+.message-card a,
+.message-company {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
+.message-head {
+  min-width: 0;
+}
+
+.message-head div {
+  min-width: 0;
+}.message-card p {
+  max-height: 250px;
+  overflow-y: auto;
+}
 .message-head {
   display: flex;
   justify-content: space-between;
