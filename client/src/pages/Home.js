@@ -3,23 +3,17 @@ import axios from "axios";
 import { FaGithub, FaLinkedin, FaDownload, FaRocket } from "react-icons/fa";
 import { FiMenu, FiX } from "react-icons/fi";
 import "./Home.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import Lenis from "lenis";
+
 
 const skills = [
-  "JavaScript",
-  "React.js",
-  "Node.js",
-  "Express.js",
-  "MongoDB",
   "REST APIs",
-  "Tailwind CSS",
   "Bootstrap",
   "Git",
-  "GitHub",
   "JWT Authentication",
-  "Mongoose",
   "Responsive Web Design",
-  "MongoDB Atlas",
-  "Postman",
   "Full-Stack Development",
 ];
 
@@ -74,26 +68,42 @@ const Home = () => {
     url: "/cv.pdf",
     name: "Gurdeep-Singh-Resume.pdf",
   });
-  const stars = Array.from({ length: 36 });
-  const streaks = Array.from({ length: 8 });
+const [darkMode, setDarkMode] = useState(
+  () => localStorage.getItem("theme") === "dark"
+);
 
+useEffect(() => {
+  localStorage.setItem("theme", darkMode ? "dark" : "light");
+
+  document.body.className = darkMode
+    ? "dark-theme"
+    : "light-theme";
+}, [darkMode]);
   useEffect(() => {
-    const revealElements = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.18 }
-    );
-
-    revealElements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    AOS.init({
+      duration: 800,
+        once: false,
+        mirror: true,
+      offset: 120,
+      easing: "ease-out-cubic",
+    });
   }, []);
+useEffect(() => {
+  const lenis = new Lenis({
+    duration: 2,
+    smoothWheel: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+
+  return () => lenis.destroy();
+}, []);
+
 
   useEffect(() => {
     const loadPortfolioData = async () => {
@@ -158,25 +168,35 @@ const Home = () => {
       setIsSubmitting(false);
     }
   };
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   return (
-    <div className="page">
-      <div className="space-grid" />
-      <div className="nebula nebula-a" />
-      <div className="nebula nebula-b" />
-      <div className="starfield">
-        {stars.map((_, index) => (
-          <span key={`star-${index}`} className="star" />
-        ))}
-      </div>
-      <div className="streak-layer">
-        {streaks.map((_, index) => (
-          <span key={`streak-${index}`} className="streak" />
-        ))}
-      </div>
+    <div className={`page ${darkMode ? "dark-theme" : "light-theme"}`}>
 
-      <header className="navbar">
+
+      <header className={`navbar ${darkMode ? "dark-theme" : "light-theme"}`} >
         <div className="brand">Gurdeep Singh</div>
+        <button
+          className="theme-toggle"
+          onClick={() => setDarkMode(!darkMode)}
+          aria-label="Toggle theme"
+        >
+          {darkMode ? (
+            <img src="/lightmode.svg" alt="Light Mode" />
+          ) : (
+            <img src="/darkmode.svg" alt="Dark Mode" />
+          )}
+        </button>
         <button
           className="menu-btn"
           onClick={() => setIsNavOpen((prev) => !prev)}
@@ -185,28 +205,30 @@ const Home = () => {
           {isNavOpen ? <FiX /> : <FiMenu />}
         </button>
         <nav className={`nav-links ${isNavOpen ? "open" : ""}`}>
-          <a href="#home" onClick={() => setIsNavOpen(false)}>
+          <a data-aos="fade-left" data-aos-delay="1100" href="#home" onClick={() => setIsNavOpen(false)}>
             Home
           </a>
-          <a href="#skills" onClick={() => setIsNavOpen(false)}>
+          <a data-aos="fade-left" href="#skills"  data-aos-delay="1200" onClick={() => setIsNavOpen(false)}>
             Skills
           </a>
-          <a href="#projects" onClick={() => setIsNavOpen(false)}>
+          <a data-aos="fade-left" href="#projects"  data-aos-delay="1300" onClick={() => setIsNavOpen(false)}>
             Projects
           </a>
-          <a href="#contact" onClick={() => setIsNavOpen(false)}>
+          <a data-aos="fade-left"  data-aos-delay="1400" href="#contact" onClick={() => setIsNavOpen(false)}>
             Contact
           </a>
+
         </nav>
+
       </header>
 
       <main>
-        <section id="home" className="hero reveal">
-          <div className="hero-layout">
+       
+          <div id="home" data-aos="fade-left"   className="hero-layout">
             <div className="hero-main">
-              <p className="tagline">MERN Stack Developer</p>
-              <h1>Building high-performance web products for modern teams.</h1>
-              <p className="intro">
+              <p  className="tagline">MERN Stack Developer</p>
+              <h1 >Building high-performance web products for modern teams.</h1>
+              <p  className="intro">
                 I design and ship full-stack applications with strong architecture,
                 smooth UX, and production-focused quality.
               </p>
@@ -226,7 +248,7 @@ const Home = () => {
                 >
                   <FaGithub />
                 </a>
-                <a
+                <a 
                   href="https://www.linkedin.com/in/gurdeep-singh03/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -236,40 +258,80 @@ const Home = () => {
               </div>
             </div>
             <aside className="hero-panel">
-              {highlights.map((item) => (
-                <article key={item.label} className="hero-panel-item">
-                  <p>{item.label}</p>
-                  <h3>{item.value}</h3>
-                </article>
-              ))}
+                {highlights.map((item) => (
+              <article
+                key={item.label}
+                className="hero-panel-item"
+
+              >
+                <p>{item.label}</p>
+                <h3>{item.value}</h3>
+              </article>
+            ))}
             </aside>
           </div>
-        </section>
+       
 
-        <section id="skills" className="card-section reveal">
-          <div className="section-head">
+        
+          <div data-aos="fade-up" id="skills"  className="section-head">
             <p>Tech Arsenal</p>
             <span />
           </div>
-          <h2>Core Stack</h2>
+          <h2 data-aos="fade-up">Core Stack</h2>
+          <div className="skills" >
+            <div data-aos="fade-left" data-aos-delay="100" className="skill-cards">
+              <img src="/MongoDB.png" alt="mongo"/>
+            <h3>MongoDB</h3>
+            </div>
+            <div data-aos={isMobile ? "fade-right" : "fade-left"} data-aos-delay="500" className="skill-cards">
+              <img src="/expressjs.svg" alt="exress"/>
+            <h3>Express Js</h3>
+            </div >
+                        <div data-aos="fade-left" data-aos-delay="1000" className="skill-cards">
+              <img src="/reactjs.svg" alt="react"/>
+            <h3>React Js</h3>
+            </div>
+            <div data-aos={isMobile ? "fade-right" : "fade-left"} data-aos-delay="1500" className="skill-cards">
+              <img src="/nodejs.svg" alt="node"/>
+            <h3>Node Js</h3>
+            </div>
+                        
+            <div data-aos="fade-left" data-aos-delay="100" className="skill-cards">
+              <img src="/javascript.svg" alt="node"/>
+            <h3>JavaScript</h3>
+            </div>            
+            <div data-aos={isMobile ? "fade-right" : "fade-left"} data-aos-delay="500" className="skill-cards">
+              <img src="/github.svg" alt="node"/>
+            <h3>GitHub</h3>
+            </div>            
+            <div data-aos="fade-left" data-aos-delay="1000" className="skill-cards">
+              <img src="/tailwind.svg" alt="node"/>
+            <h3>Tailwing CSS</h3>
+            </div>            
+            <div data-aos={isMobile ? "fade-right" : "fade-left"} data-aos-delay="1500" className="skill-cards">
+              <img src="/python.svg" alt="node"/>
+            <h3>Python</h3>
+            </div>
+
+          </div>
           <div className="skills-grid">
             {skills.map((skill) => (
-              <article key={skill} className="glass-card hover-up">
-                <h3>{skill}</h3>
+              <article data-aos="fade-up" data-aos-delay="7000"  key={skill} className="glass-card hover-up">
+                <h3 >{skill}</h3>
               </article>
             ))}
           </div>
-        </section>
+      
 
-        <section id="projects" className="card-section reveal">
+        <section data-aos="fade-up" data-aos-delay="7000" id="projects" className="card-section">
           <div className="section-head">
-            <p>Latest Work</p>
+            <p data-aos="fade-up">Latest Work</p>
             <span />
           </div>
           <h2>Featured Projects</h2>
           <div className="projects-grid">
-            {projects.map((project) => (
-              <article key={project.title} className="project-card hover-up">
+            {projects.map((project , index) => (
+              <article data-aos="fade-left" data-aos-delay={index * 1000}  key={project.title} className="project-card hover-up">
                 <img src={project.image} alt={project.title} />
                 <div className="project-body">
                   <span className="project-pill">{project.stack}</span>
@@ -284,9 +346,10 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="contact" className="contact-wrap reveal">
-          <div className="contact-copy">
-            <div className="section-head">
+        <section data-aos="fade-up" id="contact" className="contact-wrap ">
+
+          <div data-aos="fade-right" data-aos-delay="500" className="contact-copy">
+                      <div className="section-head">
               <p>Contact</p>
               <span />
             </div>
@@ -295,8 +358,8 @@ const Home = () => {
               Share your requirement and timeline. I will reply quickly with a
               clear action plan.
             </p>
-          </div>
-          <form className="contact-form" onSubmit={handleSubmit}>
+          
+          <form data-aos="fade-left" data-aos-delay="500" className="contact-form" onSubmit={handleSubmit}>
             <input
               type="text"
               name="fullName"
@@ -335,6 +398,7 @@ const Home = () => {
               <p className={`status ${status.type}`}>{status.text}</p>
             )}
           </form>
+          </div>
         </section>
       </main>
     </div>
