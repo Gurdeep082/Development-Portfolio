@@ -10,7 +10,7 @@ let clientProcess = null;
 
 const isServerRunning = () =>
   new Promise((resolve) => {
-    const request = http.get("http://localhost:5000/api/health", (response) => {
+    const request = http.get("https://portfolio-quwt.onrender.com/api/health", (response) => {
       response.resume();
       resolve(response.statusCode === 200);
     });
@@ -37,7 +37,7 @@ const stopProcesses = () => {
 
 const start = async () => {
   if (!(await isServerRunning())) {
-    console.log("Starting portfolio API on http://localhost:5000...");
+    console.log("Starting portfolio API on https://portfolio-quwt.onrender.com...");
     serverProcess = spawn(process.execPath, ["server.js"], {
       cwd: serverRoot,
       env: process.env,

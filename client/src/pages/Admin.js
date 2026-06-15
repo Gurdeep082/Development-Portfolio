@@ -162,6 +162,37 @@ const Admin = () => {
       setIsBusy(false);
     }
   };
+  const resetVisitCount = async () => {
+  if (!window.confirm("Reset website visit count?")) return;
+
+  setIsBusy(true);
+  setStatus({ type: "", text: "" });
+
+  try {
+    await axios.put(
+      "https://portfolio-quwt.onrender.com/api/admin/reset-visits",
+      {},
+      adminConfig
+    );
+
+    setDashboard((current) => ({
+      ...current,
+      settings: {
+        ...current.settings,
+        visitCount: 0,
+      },
+    }));
+
+    setStatus({
+      type: "success",
+      text: "Visit count reset successfully.",
+    });
+  } catch (error) {
+    showError(error);
+  } finally {
+    setIsBusy(false);
+  }
+};
 
   useEffect(() => {
     if (!isDashboardOpen || !adminKey) return undefined;
@@ -295,7 +326,9 @@ const Admin = () => {
         <article><strong>{dashboard.projects.length}</strong><span>Projects</span></article>
         <article><strong>{dashboard.messages.length}</strong><span>Messages</span></article>
         <article><strong>{dashboard.settings.resume ? "Yes" : "No"}</strong><span>Custom resume</span></article>
-        <article><strong>{dashboard.settings.visitCount || 0}</strong><span>Website visits</span></article>
+        <article><strong>{dashboard.settings.visitCount || 0}</strong><span>Website visits</span>
+        <button type="button" className="reset-visits-btn" onClick={resetVisitCount} disabled={isBusy}> Reset Count </button>
+        </article>
       </section>
 
       {status.text && <p className={`admin-status ${status.type}`}>{status.text}</p>}

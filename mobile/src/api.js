@@ -4,8 +4,8 @@ export const defaultApiUrl =
   process.env.EXPO_PUBLIC_API_URL ||
   Platform.select({
     android: "http://10.0.2.2:5000",
-    ios: "http://localhost:5000",
-    default: "http://localhost:5000",
+    ios: "https://portfolio-quwt.onrender.com",
+    default: "https://portfolio-quwt.onrender.com",
   });
 
 export const normalizeApiUrl = (value) => value.trim().replace(/\/+$/, "");

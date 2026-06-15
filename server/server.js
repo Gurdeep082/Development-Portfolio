@@ -216,6 +216,30 @@ app.get("/api/admin/dashboard", requireAdmin, requireDatabase, async (_, res) =>
     return res.status(500).json({ message: "Could not load dashboard." });
   }
 });
+app.put("/api/admin/reset-visits", requireAdmin, requireDatabase, async (_, res) => {
+  try {
+    const settings = await SiteSettings.findOneAndUpdate(
+      { key: "portfolio" },
+      { $set: { visitCount: 0 } },
+      { new: true, upsert: true }
+    );
+
+    broadcastAdminEvent("visit", {
+      visitCount: 0,
+    });
+
+    return res.status(200).json({
+      message: "Visit count reset.",
+      visitCount: 0,
+    });
+  } catch (error) {
+    console.error("Failed to reset visit count:", error.message);
+    return res.status(500).json({
+      message: "Could not reset visit count.",
+    });
+  }
+});
+
 
 app.post("/api/admin/projects", requireAdmin, requireDatabase, async (req, res) => {
   const { title, description, stack, link, image } = req.body;
