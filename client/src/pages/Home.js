@@ -181,6 +181,7 @@ useEffect(() => {
 }, []);
 
   return (
+    <>
     <div className={`page ${darkMode ? "dark-theme" : "light-theme"}`}>
 
 
@@ -331,7 +332,7 @@ useEffect(() => {
           <h2>Featured Projects</h2>
           <div className="projects-grid">
             {projects.map((project , index) => (
-              <article data-aos="fade-left" data-aos-delay={index * 1000}  key={project.title} className="project-card hover-up">
+              <article data-aos="flip-right" data-aos-delay={index * 1000}  key={project.title} className="project-card hover-up">
                 <img src={project.image} alt={project.title} />
                 <div className="project-body">
                   <span className="project-pill">{project.stack}</span>
@@ -406,8 +407,36 @@ useEffect(() => {
 
           
         </section>
+
       </main>
     </div>
+      <div className="footer-bottom">
+        <p>
+          © {new Date().getFullYear()} Gurdeep Singh. All Rights Reserved.
+        </p>
+
+        <div className="footer-links">
+          <a
+            href="https://instagram.com/_gurdeep03_"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <img src="/instagram.svg" alt="Instagram" />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/gurdeep-singh03/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <img src="/linkedin.svg" alt="LinkedIn" />
+          </a>
+        </div>
+      </div>
+          
+        </>
   );
 };
 
