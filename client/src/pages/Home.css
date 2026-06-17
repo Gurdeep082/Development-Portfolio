@@ -181,9 +181,19 @@ main {
   align-items: center;
   gap: .55rem;
   box-shadow: 0 10px 30px var(--shadow);
+  transition: transform 0.3s ease;
 }
 .btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #261300; }
-.btn-secondary { border: 1px solid #ffffff33; color: var(--text); background: #ffffff08; }
+.btn-secondary { color: var(--text); background: #ffffff00; }
+
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.btn:not(:hover) {
+  transform: scale(1);
+}
 
 .socials { display: flex; gap: .6rem; margin-top: 1.1rem; }
 .socials a {
@@ -194,6 +204,7 @@ main {
   border: 1px solid #ffffff29;
   background: #ffffff08;
 }
+
 
 .hero-panel { display: grid; gap: .7rem; }
 .hero-panel-item {
@@ -318,19 +329,30 @@ main {
 .contact-form button {
   border: 0;
   border-radius: 10px;
-  padding: .82rem;
+  padding: 0.82rem;
   font-weight: 800;
+  max-width: 90%;
   cursor: pointer;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: #321600;
+  transition: transform 0.3s ease;
+  transform: scale(1);
+  margin: 0 5%;
 }
-.contact-form button:disabled { opacity: .7; }
+
+.contact-form button:hover {
+  transform: scale(1.1);
+}
+
+.contact-form button:not(:hover) {
+  transform: scale(1);
+}
+
 .status { margin: 0; font-size: .92rem; }
 .status.success { color: var(--ok); }
 .status.error { color: var(--err); }
 
-.hover-up { transition: transform .26s ease, border-color .26s ease; }
-.hover-up:hover { transform: translateY(-5px); border-color: #ffffff48; }
+
 .contact-section{
   display: flex;
   flex-direction: row;
