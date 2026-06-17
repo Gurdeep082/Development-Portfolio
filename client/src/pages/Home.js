@@ -6,6 +6,7 @@ import "./Home.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Lenis from "lenis";
+import SpaceBackground from "../components/spacebackground";
 
 
 const skills = [
@@ -182,6 +183,7 @@ useEffect(() => {
 
   return (
     <>
+     <SpaceBackground />
     <div className={`page ${darkMode ? "dark-theme" : "light-theme"}`}>
 
 
@@ -410,13 +412,12 @@ useEffect(() => {
         </section>
 
       </main>
-    </div>
-      <div className="footer-bottom">
+            <div className={`footer-bottom ${darkMode ? "dark-theme" : "light-theme"}`}>
         <p>
           © {new Date().getFullYear()} Gurdeep Singh. All Rights Reserved.
         </p>
 
-        <div className="footer-links">
+        <div className={`footer-links ${darkMode ? "dark-theme" : "light-theme"}`}>
           <a
             href="https://instagram.com/_gurdeep03_"
             target="_blank"
@@ -436,6 +437,8 @@ useEffect(() => {
           </a>
         </div>
       </div>
+    </div>
+
           
         </>
   );
