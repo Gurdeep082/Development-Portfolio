@@ -208,7 +208,10 @@ useEffect(() => {
         >
           {isNavOpen ? <FiX /> : <FiMenu />}
         </button>
-        <nav className={`nav-links ${isNavOpen ? "open" : ""}`}>
+
+
+      </header>
+              <nav className={`nav-links ${isNavOpen ? "open" : ""}`}>
           <a data-aos="fade-left" data-aos-delay="1100" href="#home" onClick={() => setIsNavOpen(false)}>
             Home
           </a>
@@ -223,8 +226,6 @@ useEffect(() => {
           </a>
 
         </nav>
-
-      </header>
 
       <main>
        
