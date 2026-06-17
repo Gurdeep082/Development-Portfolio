@@ -187,7 +187,8 @@ useEffect(() => {
 
       <header className={`navbar ${darkMode ? "dark-theme" : "light-theme"}`} >
         <div className="brand">Gurdeep Singh</div>
-        <button
+        <  button 
+          data-aos="fade-left" data-aos-delay="1000"
           className="theme-toggle"
           onClick={() => setDarkMode(!darkMode)}
           aria-label="Toggle theme"
