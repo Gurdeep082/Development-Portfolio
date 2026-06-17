@@ -346,8 +346,8 @@ useEffect(() => {
           </div>
         </section>
 
-        <section data-aos="fade-up" id="contact" className="contact-wrap ">
-
+        <section data-aos="fade-up" id="contact" className="contact-section" >
+        <div className="contact-wrap ">
           <div data-aos="fade-right" data-aos-delay="500" className="contact-copy">
                       <div className="section-head">
               <p>Contact</p>
@@ -359,7 +359,7 @@ useEffect(() => {
               clear action plan.
             </p>
           
-          <form data-aos="fade-left" data-aos-delay="500" className="contact-form" onSubmit={handleSubmit}>
+          <form data-aos="fade-right" data-aos-delay="500" className="contact-form" onSubmit={handleSubmit}>
             <input
               type="text"
               name="fullName"
@@ -399,6 +399,12 @@ useEffect(() => {
             )}
           </form>
           </div>
+        </div>
+        <div className="chat" data-aos="fade-left" data-aos-delay="500">
+          <img src="/chat.svg" alt="chat"/>
+        </div>
+
+          
         </section>
       </main>
     </div>

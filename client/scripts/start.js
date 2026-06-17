@@ -1,5 +1,5 @@
 const { spawn } = require("child_process");
-const http = require("http");
+const http = require("https");
 const path = require("path");
 
 const clientRoot = path.resolve(__dirname, "..");
