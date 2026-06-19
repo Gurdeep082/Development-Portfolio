@@ -183,49 +183,77 @@ useEffect(() => {
 
   return (
     <>
-     <SpaceBackground />
-    <div className={`page ${darkMode ? "dark-theme" : "light-theme"}`}>
+      <SpaceBackground />
 
+      <div className={`page ${darkMode ? "dark-theme" : "light-theme"}`}>
+        <div className="navbar-wrap">
+          <header className={`navbar ${darkMode ? "dark-theme" : "light-theme"}`}>
 
-      <header className={`navbar ${darkMode ? "dark-theme" : "light-theme"}`} >
-        <div className="brand">Gurdeep Singh</div>
-        <  button 
-          data-aos="fade-left" data-aos-delay="1000"
-          className="theme-toggle"
-          onClick={() => setDarkMode(!darkMode)}
-          aria-label="Toggle theme"
-        >
-          {darkMode ? (
-            <img src="/lightmode.svg" alt="Light Mode" />
-          ) : (
-            <img src="/darkmode.svg" alt="Dark Mode" />
-          )}
-        </button>
-        <button
-          className="menu-btn"
-          onClick={() => setIsNavOpen((prev) => !prev)}
-          aria-label="Toggle navigation"
-        >
-          {isNavOpen ? <FiX /> : <FiMenu />}
-        </button>
+            <div className="brand">Gurdeep Singh</div>
 
+            <button
+              data-aos="fade-left"
+              data-aos-delay="1000"
+              className="theme-toggle"
+              onClick={() => setDarkMode(!darkMode)}
+              aria-label="Toggle theme"
+            >
+              {darkMode ? (
+                <img src="/lightmode.svg" alt="Light Mode" />
+              ) : (
+                <img src="/darkmode.svg" alt="Dark Mode" />
+              )}
+            </button>
 
-      </header>
-              <nav className={`nav-links ${isNavOpen ? "open" : ""}`}>
-          <a data-aos="fade-left" data-aos-delay="1100" href="#home" onClick={() => setIsNavOpen(false)}>
-            Home
-          </a>
-          <a data-aos="fade-left" href="#skills"  data-aos-delay="1200" onClick={() => setIsNavOpen(false)}>
-            Skills
-          </a>
-          <a data-aos="fade-left" href="#projects"  data-aos-delay="1300" onClick={() => setIsNavOpen(false)}>
-            Projects
-          </a>
-          <a data-aos="fade-left"  data-aos-delay="1400" href="#contact" onClick={() => setIsNavOpen(false)}>
-            Contact
-          </a>
+            <nav className={`nav-links ${isNavOpen ? "open" : ""}`}>
+              <a
+                data-aos="fade-left"
+                data-aos-delay="1100"
+                href="#home"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Home
+              </a>
 
-        </nav>
+              <a
+                data-aos="fade-left"
+                data-aos-delay="1200"
+                href="#skills"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Skills
+              </a>
+
+              <a
+                data-aos="fade-left"
+                data-aos-delay="1300"
+                href="#projects"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Projects
+              </a>
+
+              <a
+                data-aos="fade-left"
+                data-aos-delay="1400"
+                href="#contact"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Contact
+              </a>
+            </nav>
+
+            <button
+              className="menu-btn"
+              onClick={() => setIsNavOpen((prev) => !prev)}
+              aria-label="Toggle navigation"
+            >
+              {isNavOpen ? <FiX /> : <FiMenu />}
+            </button>
+
+          </header>
+        </div>
+      
 
       <main>
        

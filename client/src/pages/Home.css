@@ -12,11 +12,13 @@
   --container: 1160px;
   --radius: 22px;
   --shadow:rgb(163, 162, 162);
+  --navlinks: #ffffffba;
 }
 .dark-theme {
   --bg: #00000000;
   --text: #ffffff;
   --shadow:rgb(0, 0, 0);
+  --navlinks: #000000d6;
 }
 .dark-theme .skill-cards img {
   filter: brightness(0) invert(1);
@@ -76,6 +78,7 @@ body { margin: 0; }
   justify-content: space-between;
   background: #0f121a00;
   border-bottom: 1px solid #ffffff14;
+  backdrop-filter: blur(3px);
 
 }
 
@@ -115,7 +118,7 @@ body { margin: 0; }
 }
 
 .menu-btn { display: none; background: transparent; border: 0; color: var(--text); font-size: 1.6rem; }
-.nav-links { display: flex; gap: .6rem; }
+.nav-links { display: flex; gap: .6rem; z-index: 1000; background: var(--navlinks); border-radius: 14px; padding: .6rem .9rem; }
 .nav-links a {
   color: var(--text);
   text-decoration: none;
@@ -124,7 +127,7 @@ body { margin: 0; }
   border-radius: 10px;
   transition: .2s;
 }
-.nav-links a:hover { color: var(--text); background: #ffffff10; }
+.nav-links a:hover { color: var(--text); background: var(--navlinks); }
 
 main {
   width: min(var(--container), 92%);
@@ -415,6 +418,7 @@ main {
     padding: 2.8rem 0 5.5rem;
     gap: 2rem;
   }
+  .nav-links { display: flex; gap: .6rem; z-index: 1000; }
   .contact-section{
     gap: 0px;
   }
@@ -444,7 +448,7 @@ main {
   gap: 0.5rem;
   padding: 1rem;
 
-  background: rgba(0, 0, 0, 0);
+  background: var(--navlinks);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
@@ -464,7 +468,7 @@ main {
   padding: 0.75rem;
   border-radius: 10px;
   color: var(--text);
-  background:var(--bg);   /* Important */
+  background: var(--navlinks);   /* Important */
   backdrop-filter: none;     /* Important */
 }
    main {
