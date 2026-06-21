@@ -65,10 +65,7 @@ const Home = () => {
   const [status, setStatus] = useState({ type: "", text: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [projects, setProjects] = useState(loadCachedProjects);
-  const [resume, setResume] = useState({
-    url: "/cv.pdf",
-    name: "Gurdeep-Singh-Resume.pdf",
-  });
+  const [resume, setResume] = useState(null);
 const [darkMode, setDarkMode] = useState(
   () => localStorage.getItem("theme") === "dark"
 );
@@ -266,7 +263,10 @@ useEffect(() => {
                 smooth UX, and production-focused quality.
               </p>
               <div className="cta-row">
-                <a href={resume.url} download={resume.name} className="btn btn-primary">
+                <a href={resume.url || "#"} download={resume.name} className=  className={`btn btn-primary ${!resume.url ? "disabled" : ""}`}
+                  onClick={(e) => {
+                    if (!resume.url) e.preventDefault();
+                  }}>
                   <FaDownload /> Download CV
                 </a>
                 <a href="#contact" className="btn btn-secondary">
