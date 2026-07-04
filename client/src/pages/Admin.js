@@ -12,10 +12,10 @@ import "./Admin.css";
 
 const emptyProject = {
   title: "",
-  description: "",
   stack: "",
+  description: "",
   link: "",
-  image: "",
+  images: [],
 };
 
 const cacheProjects = (projects) => {
@@ -76,22 +76,35 @@ const Admin = () => {
     setProject((current) => ({ ...current, [name]: value }));
   };
 
-  const onImageChange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      setStatus({ type: "error", text: "Please select an image file." });
-      return;
-    }
+const onImageChange = async (event) => {
+  const files = Array.from(event.target.files);
 
-    try {
-      const image = await readFile(file, 4);
-      setProject((current) => ({ ...current, image }));
-      setStatus({ type: "success", text: "Project image is ready." });
-    } catch (error) {
-      showError(error);
-    }
-  };
+  if (!files.length) return;
+
+  try {
+    const images = await Promise.all(
+      files.map(async (file) => {
+        if (!file.type.startsWith("image/")) {
+          throw new Error("Please select image files only.");
+        }
+
+        return await readFile(file, 4);
+      })
+    );
+
+    setProject((current) => ({
+      ...current,
+      images,
+    }));
+
+    setStatus({
+      type: "success",
+      text: `${images.length} image(s) selected.`,
+    });
+  } catch (error) {
+    showError(error);
+  }
+};
 
   const createProject = async (event) => {
     event.preventDefault();
@@ -338,14 +351,26 @@ const Admin = () => {
           <div className="admin-title"><FaFolderPlus /><h2>Add Project</h2></div>
           <form onSubmit={createProject} className="admin-form">
             <input name="title" value={project.title} onChange={onProjectChange} placeholder="Project title" required />
-            <textarea name="description" value={project.description} onChange={onProjectChange} placeholder="Project description" rows="4" required />
             <input name="stack" value={project.stack} onChange={onProjectChange} placeholder="Stack, e.g. React | Node.js" />
+            <textarea name="description" value={project.description} onChange={onProjectChange} placeholder="Project description" rows="4" required />
             <input name="link" type="url" value={project.link} onChange={onProjectChange} placeholder="https://project-link.com" required />
             <label className="file-field">
               <span>Project image (max 4 MB)</span>
-              <input type="file" accept="image/*" onChange={onImageChange} required={!project.image} />
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={onImageChange}
+                required={project.images.length === 0}
+              />
             </label>
-            {project.image && <img className="admin-preview" src={project.image} alt="Project preview" />}
+            {project.images && project.images.length > 0 && (
+              <div className="admin-image-preview">
+                {project.images.map((img, index) => (
+                  <img key={index} src={img} alt={`Project preview ${index + 1}`} />
+                ))}
+              </div>
+            )}
             <button disabled={isBusy}>Publish Project</button>
           </form>
         </section>

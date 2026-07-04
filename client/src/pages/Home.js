@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Lenis from "lenis";
 import SpaceBackground from "../components/spacebackground";
+import ProjectSlider from "../components/ProjectSlider";
 
 
 const skills = [
@@ -411,7 +412,7 @@ useEffect(() => {
           <div className="projects-grid">
             {projects.map((project , index) => (
               <article data-aos="flip-right" data-aos-delay={index * 1000}  key={project.title} className="project-card hover-up">
-                <img src={project.image} alt={project.title} />
+                <ProjectSlider images={project.images || []} title={project.title}/>
                 <div className="project-body">
                   <span className="project-pill">{project.stack}</span>
                   <h3>{project.title}</h3>
