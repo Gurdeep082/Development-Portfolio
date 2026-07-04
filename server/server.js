@@ -242,23 +242,39 @@ app.put("/api/admin/reset-visits", requireAdmin, requireDatabase, async (_, res)
 
 
 app.post("/api/admin/projects", requireAdmin, requireDatabase, async (req, res) => {
-  const { title, description, stack, link, image } = req.body;
-  if (!title || !description || !link || !image) {
+  const { title, description, stack, link, images } = req.body;
+
+  if (
+    !title ||
+    !description ||
+    !link ||
+    !Array.isArray(images) ||
+    images.length === 0
+  ) {
     return res.status(400).json({
-      message: "Title, description, project link, and image are required.",
+      message: "Title, description, project link, and at least one image are required.",
     });
   }
 
   try {
-    const project = await Project.create({ title, description, stack, link, image });
+    const project = await Project.create({
+      title,
+      description,
+      stack,
+      link,
+      images,
+    });
+
     broadcastAdminEvent("project-created", project.toObject());
+
     return res.status(201).json(project);
   } catch (error) {
-    console.error("Failed to create project:", error.message);
-    return res.status(500).json({ message: "Could not create project." });
+    console.error("Failed to create project:", error);
+    return res.status(500).json({
+      message: "Could not create project.",
+    });
   }
 });
-
 app.delete("/api/admin/projects/:id", requireAdmin, requireDatabase, async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
