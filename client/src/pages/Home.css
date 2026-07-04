@@ -12,7 +12,7 @@
   --container: 1160px;
   --radius: 22px;
   --shadow:rgb(163, 162, 162);
-  --navlinks: #ffffffba;
+  --navlinks: #acacacb9;
 }
 .dark-theme {
   --bg: #00000000;
@@ -20,9 +20,7 @@
   --shadow:rgb(24, 24, 24);
   --navlinks: #000000d6;
 }
-.dark-theme .skill-cards img {
-  filter: brightness(0) invert(1);
-}
+
 
 .light-theme .skill-cards img {
   filter: none;
@@ -83,16 +81,16 @@ body { margin: 0; }
 }
 
 .brand {
-  font-size: 1.05rem;
-  letter-spacing: .1em;
+ background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #261300;
+  text-decoration:var(--text);
+  border-radius: 12px;
+  padding: .78rem 1rem;
   font-weight: 700;
-  margin: 0;
-  color:var(--text);
-  border: 1px solid #ffffff00;
-  background: rgba(0, 0, 0, 0.044);
-  border-radius: 999px;
-  padding: .45rem .82rem;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  box-shadow: 0 10px 20px var(--shadow);
+  transition: transform 0.3s ease;
 }
 .theme-toggle {
   width: 50px;
@@ -117,18 +115,54 @@ body { margin: 0; }
   transform: rotate(20deg);
 }
 
-.menu-btn { display: none; background: transparent; border: 0; color: var(--text); font-size: 1.6rem; }
-.nav-links { display: flex; gap: .6rem; z-index: 1000; background: var(--navlinks); border-radius: 14px; padding: .6rem .9rem; }
+.menu-btn { display: none; background:transparent; border: 0; color: var(--text); font-size: 1.6rem; }
+.nav-links { display: flex; gap: .6rem; z-index: 1000;  border-radius: 14px; padding: .6rem .9rem; }
 .nav-links a {
+  position: relative;
+  padding: 10px;
+  overflow: visible;
   color: var(--text);
   text-decoration: none;
-  padding: .45rem .7rem;
-  background-color: rgba(0, 0, 0, 0.044);
   border-radius: 10px;
-  transition: .2s;
-}
-.nav-links a:hover { color: var(--text); background: var(--navlinks); }
+  z-index: 1;
 
+  transition:
+    color .3s ease,
+    transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+.nav-links a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  border-radius: inherit;
+
+  transform: scale(.8);
+  opacity: 0;
+
+  box-shadow: 0 10px 20px var(--shadow);
+
+  transition:
+    transform .35s cubic-bezier(.22,1,.36,1),
+    opacity .35s ease,
+    box-shadow .35s ease;
+
+  z-index: -1;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.nav-links a:hover::before {
+  transform: scale(1);
+  opacity: 1;
+
+  box-shadow:
+   0 10px 20px var(--shadow);
+}
 main {
   width: min(var(--container), 92%);
   margin: 0 auto;
@@ -270,13 +304,24 @@ main {
   height: 200px;
   border-radius: 20px;
 }
-.project-card{
+.project-grid{
   overflow: hidden;
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-rows: 210px 1fr; 
- border-radius: 14px;
-  background: rgba(0, 0, 0, 0) ;
-  backdrop-filter: blur(3px);
+ border-radius:15px;
+ padding: 25px;
+ box-shadow: 0 10px 20px var(--shadow);
+transition: transform 0.3s ease;
+}
+.project-card{
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 210px 1fr; 
+ border-radius:15px;
  padding: 25px;
  box-shadow: 0 10px 20px var(--shadow);
 transition: transform 0.3s ease;
@@ -294,7 +339,60 @@ transition: transform 0.3s ease;
  box-shadow: 0 10px 20px var(--shadow);
 
 }
+.project-slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  
+}
 
+.project-slider-track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  will-change: transform;
+}
+
+.project-slider-image {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 6px 10px;
+  backdrop-filter: blur(6px);
+  border-radius: 999px;
+  z-index: 10;
+}
+
+.slider-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #777777; /* Visible in both light & dark */
+  border: 2px solid #777777; /* Helps on dark images */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dots span:hover {
+  transform: scale(1.15);
+}
+
+.slider-dots span.active {
+  background: #ff7a18; /* Your primary color */
+  border-color: #ff7a18;
+  transform: scale(1.1);
+}
 
 
 .glass-card {
@@ -311,7 +409,7 @@ transition: transform 0.3s ease;
 .glass-card h3 { margin: 0;color:var(--text); font-size: 1rem; }
 
 
-.project-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; align-self: center;}
+
 .project-body { padding: .9rem; display: grid; gap: .65rem; height: max-content;}
 .project-pill { width: max-content; height: max-content; padding: .24rem .55rem; border-radius: 999px; border: 1px solid #ffffff2d; background: #ffffff12; font-size: .72rem; color: #ff9d00; }
 .project-body h3,.project-body p { margin: 0;height: max-content; }

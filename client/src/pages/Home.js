@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaGithub, FaLinkedin, FaDownload, FaRocket } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaDownload, FaRocket, FaUser } from "react-icons/fa";
 import { FiMenu, FiX } from "react-icons/fi";
 import "./Home.css";
 import AOS from "aos";
@@ -204,7 +204,7 @@ useEffect(() => {
         <div className="navbar-wrap">
           <header className={`navbar ${darkMode ? "dark-theme" : "light-theme"}`}>
 
-            <div className="brand">Gurdeep Singh</div>
+            <div className="brand"><FaUser />GURDEEP SINGH</div>
 
             <button
               data-aos="fade-left"
@@ -411,8 +411,8 @@ useEffect(() => {
           <h2>Featured Projects</h2>
           <div className="projects-grid">
             {projects.map((project , index) => (
-              <article data-aos="flip-right" data-aos-delay={index * 1000}  key={project.title} className="project-card hover-up">
-                <ProjectSlider images={project.images || []} title={project.title}/>
+              <article data-aos="flip-right" data-aos-delay={index * 1000}  key={project.title} className="project-card">
+                <ProjectSlider autoplay={true} images={project.images || []} title={project.title}/>
                 <div className="project-body">
                   <span className="project-pill">{project.stack}</span>
                   <h3>{project.title}</h3>
