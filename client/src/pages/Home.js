@@ -414,7 +414,6 @@ useEffect(() => {
               <article data-aos="flip-right" data-aos-delay={index * 1000}  key={project.title} className="project-card">
                 <ProjectSlider autoplay={true} images={project.images || []} title={project.title}/>
                 <div className="project-body">
-
                   <h3>{project.title}</h3>
                   <p>{project.description || project.desc}</p>
                   <a href={project.link} target="_blank" rel="noreferrer">
